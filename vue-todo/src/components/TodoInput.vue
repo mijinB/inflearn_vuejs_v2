@@ -1,9 +1,24 @@
 <template>
-  <div>input</div>
+  <div>
+    <input type="text" v-model="newTodoItem" />
+    <button v-on:click="addTodo">add</button>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data: function () {
+    return {
+      newTodoItem: "",
+    };
+  },
+  methods: {
+    addTodo: function () {
+      localStorage.setItem(this.newTodoItem, this.newTodoItem);
+      this.newTodoItem = ""; //  input 초기화
+    },
+  },
+};
 </script>
 
 <style>
