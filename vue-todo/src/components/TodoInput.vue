@@ -1,58 +1,61 @@
 <template>
-  <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
-    <span class="addContainer" v-on:click="addTodo">
-      <i class="fa-solid fa-plus addBtn"></i>
-    </span>
-  </div>
+    <div class="inputBox shadow">
+        <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
+        <span class="addContainer" v-on:click="addTodo">
+            <i class="fa-solid fa-plus addBtn"></i>
+        </span>
+    </div>
 </template>
 
 <script>
 export default {
-  data: function () {
-    return {
-      newTodoItem: "",
-    };
-  },
-  methods: {
-    addTodo: function () {
-      localStorage.setItem(this.newTodoItem, this.newTodoItem);
-      this.clearInput();
+    data: function () {
+        return {
+            newTodoItem: "",
+        };
     },
-    clearInput: function() {
-      this.newTodoItem = '';
-    }
-  },
+    methods: {
+        addTodo: function () {
+            if (this.newTodoItem !== "") {
+                const obj = { completed: false, item: this.newTodoItem }; //completed: todo 완료 여부
+                localStorage.setItem(this.newTodoItem, JSON.stringify(obj)); //JSON.stringify: object를 string으로 바꿔주는 API
+                this.clearInput();
+            }
+        },
+        clearInput: function () {
+            this.newTodoItem = "";
+        },
+    },
 };
 </script>
 
 <style scoped>
 input:focus {
-  outline: none;
+    outline: none;
 }
 .inputBox {
-  display: flex;
-  background: white;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 5px;
-  overflow: hidden;
+    display: flex;
+    background: white;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .inputBox input {
-  width: 100%;
-  height: 100%;
-  border-style: none;
-  font-size: 0.9rem;
+    width: 100%;
+    height: 100%;
+    border-style: none;
+    font-size: 0.9rem;
 }
 .addContainer {
-  float: right;
-  background: linear-gradient(to right, #6478fb, #8763fb);
-  display: block;
-  width: 3rem;
-  border-radius: 0 5px 5px 0;
+    float: right;
+    background: linear-gradient(to right, #6478fb, #8763fb);
+    display: block;
+    width: 3rem;
+    border-radius: 0 5px 5px 0;
 }
 .addBtn {
-  color: white;
-  vertical-align: middle;
+    color: white;
+    vertical-align: middle;
 }
 </style>
