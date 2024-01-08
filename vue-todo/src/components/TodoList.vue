@@ -1,9 +1,9 @@
 <template>
     <div>
         <ul>
-            <li v-for="todoItem in todoItems" v-bind:key="todoItem" class="shadow">
+            <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
                 {{ todoItem }}
-                <span class="removeBtn">
+                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
                   <i class="fa-solid fa-trash"></i>
                 </span>
             </li>
@@ -17,6 +17,12 @@ export default {
         return {
             todoItems: [],
         };
+    },
+    methods: {
+      removeTodo: function(todoItem, index) {
+        localStorage.removeItem(todoItem);    //localStorage에서는 지워지지만 화면에서는 지워지지 않음
+        this.todoItems.splice(index, 1);      //화면에서도 지우기 위해서 splice를 사용해 index 위치의 item을 1개 지움
+      },
     },
     created: function () {
         if (localStorage.length > 0) {
