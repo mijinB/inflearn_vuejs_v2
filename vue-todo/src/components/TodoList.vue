@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item" class="shadow">
+            <li v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item" class="shadow">
                 <i
                     class="checkBtn fa-solid fa-check"
                     v-bind:class="{ checkBtnCompleted: todoItem.completed }"
@@ -18,11 +18,7 @@
 
 <script>
 export default {
-    data: function () {
-        return {
-            todoItems: [],
-        };
-    },
+    props: ["propsdata"],
     methods: {
         removeTodo: function (todoItem, index) {
             localStorage.removeItem(todoItem); //localStorage에서는 지워지지만 화면에서는 지워지지 않음
@@ -33,16 +29,6 @@ export default {
             localStorage.removeItem(todoItem.item); //localStorage 수정이 따로 없어서 지우고 다시 저장
             localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         },
-    },
-    created: function () {
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
-                    //로컬스토리지에 자동으로 저장되는 애들은 제외하고
-                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i)))); //JSON.parse: string으로 바꿔서 localStorage에 저장했던 걸 다시 object로 변환해서 가져오기
-                }
-            }
-        }
     },
 };
 </script>

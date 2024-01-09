@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
-    <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
-  </div>
+    <div id="app">
+        <TodoHeader></TodoHeader>
+        <TodoInput></TodoInput>
+        <TodoList v-bind:propsdata="todoItems"></TodoList>
+        <TodoFooter></TodoFooter>
+    </div>
 </template>
 
 <script>
@@ -14,31 +14,46 @@ import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
 
 export default {
-  components: {
-    TodoHeader: TodoHeader,
-    TodoInput: TodoInput,
-    TodoList: TodoList,
-    TodoFooter: TodoFooter,
-  },
+    data: function () {
+        return {
+            todoItems: [],
+        };
+    },
+    components: {
+        TodoHeader: TodoHeader,
+        TodoInput: TodoInput,
+        TodoList: TodoList,
+        TodoFooter: TodoFooter,
+    },
+    created: function () {
+        if (localStorage.length > 0) {
+            for (var i = 0; i < localStorage.length; i++) {
+                if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
+                    //로컬스토리지에 자동으로 저장되는 애들은 제외하고
+                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i)))); //JSON.parse: string으로 바꿔서 localStorage에 저장했던 걸 다시 object로 변환해서 가져오기
+                }
+            }
+        }
+    },
 };
 </script>
 
 <style>
 body {
-  background-color: #f6f6f6;
-  text-align: center;
+    background-color: #f6f6f6;
+    text-align: center;
 }
 
 input {
-  width: 200px;
-  border-style: groove;
+    width: 200px;
+    border-style: groove;
 }
 
 button {
-  border-style: groove;
+    border-style: groove;
 }
 
 .shadow {
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
 </style>
