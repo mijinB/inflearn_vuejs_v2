@@ -21,8 +21,7 @@ export default {
     props: ["propsdata"],
     methods: {
         removeTodo: function (todoItem, index) {
-            localStorage.removeItem(todoItem); //localStorage에서는 지워지지만 화면에서는 지워지지 않음
-            this.todoItems.splice(index, 1); //화면에서도 지우기 위해서 splice를 사용해 index 위치의 item을 1개 지움
+            this.$emit('removeItem', todoItem, index);
         },
         toggleComplete: function (todoItem) {
             todoItem.completed = !todoItem.completed; //localStorage는 수정 안됨
