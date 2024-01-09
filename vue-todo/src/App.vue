@@ -2,8 +2,12 @@
     <div id="app">
         <TodoHeader></TodoHeader>
         <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-        <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
-        <TodoFooter></TodoFooter>
+        <TodoList
+            v-bind:propsdata="todoItems"
+            v-on:removeItem="removeOneItem"
+            v-on:toggleItem="toggleOneItem"
+        ></TodoList>
+        <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
     </div>
 </template>
 
@@ -50,6 +54,10 @@ export default {
             this.todoItems[index].completed = !this.todoItems[index].completed;
             localStorage.removeItem(todoItem.item);
             localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+        },
+        clearAllItems: function () {
+            localStorage.clear();
+            this.todoItems = [];   //화면에서도 다 지워지게 하기 위해서 todoItems 리스트 초기화
         },
     },
 };
