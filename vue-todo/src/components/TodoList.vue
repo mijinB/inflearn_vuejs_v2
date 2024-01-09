@@ -23,10 +23,8 @@ export default {
         removeTodo: function (todoItem, index) {
             this.$emit('removeItem', todoItem, index);
         },
-        toggleComplete: function (todoItem) {
-            todoItem.completed = !todoItem.completed; //localStorage는 수정 안됨
-            localStorage.removeItem(todoItem.item); //localStorage 수정이 따로 없어서 지우고 다시 저장
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+        toggleComplete: function (todoItem, index) {
+            this.$emit('toggleItem', todoItem, index)
         },
     },
 };

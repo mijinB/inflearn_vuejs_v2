@@ -2,7 +2,7 @@
     <div id="app">
         <TodoHeader></TodoHeader>
         <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-        <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem"></TodoList>
+        <TodoList v-bind:propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
         <TodoFooter></TodoFooter>
     </div>
 </template>
@@ -44,6 +44,12 @@ export default {
         removeOneItem: function (todoItem, index) {
             localStorage.removeItem(todoItem.item);
             this.todoItems.splice(index, 1);
+        },
+        toggleOneItem: function (todoItem, index) {
+            // todoItem.completed = !todoItem.completed;  컴포넌트간 관계를 명확하게 하기 위해 아래 줄로 수정 (props로 보냈던 걸 다시 받아와서 "수정"하는 것은 안티 패턴이다.)
+            this.todoItems[index].completed = !this.todoItems[index].completed;
+            localStorage.removeItem(todoItem.item);
+            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         },
     },
 };
