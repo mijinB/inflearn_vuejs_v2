@@ -17,8 +17,7 @@ export default {
     methods: {
         addTodo: function () {
             if (this.newTodoItem !== "") {
-                const obj = { completed: false, item: this.newTodoItem }; //completed: todo 완료 여부
-                localStorage.setItem(this.newTodoItem, JSON.stringify(obj)); //JSON.stringify: object를 string으로 바꿔주는 API
+                this.$emit("addTodoItem", this.newTodoItem);
                 this.clearInput();
             }
         },
