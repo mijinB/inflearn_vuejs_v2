@@ -18,7 +18,7 @@ import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
 
 export default {
-    data: function () {
+    data() {
         return {
             todoItems: [],
         };
@@ -29,7 +29,7 @@ export default {
         TodoList: TodoList,
         TodoFooter: TodoFooter,
     },
-    created: function () {
+    created() {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
                 if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
@@ -40,24 +40,24 @@ export default {
         }
     },
     methods: {
-        addOneItem: function (todoItem) {
+        addOneItem(todoItem) {
             const obj = { completed: false, item: todoItem };
             localStorage.setItem(todoItem, JSON.stringify(obj));
             this.todoItems.push(obj);
         },
-        removeOneItem: function (todoItem, index) {
+        removeOneItem(todoItem, index) {
             localStorage.removeItem(todoItem.item);
             this.todoItems.splice(index, 1);
         },
-        toggleOneItem: function (todoItem, index) {
+        toggleOneItem(todoItem, index) {
             // todoItem.completed = !todoItem.completed;  컴포넌트간 관계를 명확하게 하기 위해 아래 줄로 수정 (props로 보냈던 걸 다시 받아와서 "수정"하는 것은 안티 패턴이다.)
             this.todoItems[index].completed = !this.todoItems[index].completed;
             localStorage.removeItem(todoItem.item);
             localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         },
-        clearAllItems: function () {
+        clearAllItems() {
             localStorage.clear();
-            this.todoItems = [];   //화면에서도 다 지워지게 하기 위해서 todoItems 리스트 초기화
+            this.todoItems = []; //화면에서도 다 지워지게 하기 위해서 todoItems 리스트 초기화
         },
     },
 };
