@@ -1,12 +1,9 @@
 <template>
     <div id="app">
         <TodoHeader></TodoHeader>
-        <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
-        <TodoList
-            v-on:removeItem="removeOneItem"
-            v-on:toggleItem="toggleOneItem"
-        ></TodoList>
-        <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
+        <TodoInput></TodoInput>
+        <TodoList></TodoList>
+        <TodoFooter></TodoFooter>
     </div>
 </template>
 
@@ -22,27 +19,6 @@ export default {
         TodoInput,
         TodoList,
         TodoFooter,
-    },
-    methods: {
-        addOneItem(todoItem) {
-            const obj = { completed: false, item: todoItem };
-            localStorage.setItem(todoItem, JSON.stringify(obj));
-            this.todoItems.push(obj);
-        },
-        removeOneItem(todoItem, index) {
-            localStorage.removeItem(todoItem.item);
-            this.todoItems.splice(index, 1);
-        },
-        toggleOneItem(todoItem, index) {
-            // todoItem.completed = !todoItem.completed;  컴포넌트간 관계를 명확하게 하기 위해 아래 줄로 수정 (props로 보냈던 걸 다시 받아와서 "수정"하는 것은 안티 패턴이다.)
-            this.todoItems[index].completed = !this.todoItems[index].completed;
-            localStorage.removeItem(todoItem.item);
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-        },
-        clearAllItems() {
-            localStorage.clear();
-            this.todoItems = []; //화면에서도 다 지워지게 하기 위해서 todoItems 리스트 초기화
-        },
     },
 };
 </script>

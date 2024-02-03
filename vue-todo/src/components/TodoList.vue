@@ -20,10 +20,10 @@
 export default {
     methods: {
         removeTodo(todoItem, index) {
-            this.$emit('removeItem', todoItem, index);
+            this.$store.commit("removeOneItem", { todoItem, index });
         },
         toggleComplete(todoItem, index) {
-            this.$emit('toggleItem', todoItem, index)
+            this.$store.commit("toggleOneItem", { todoItem, index });
         },
     },
 };
@@ -64,11 +64,12 @@ li {
 }
 
 /* transition css */
-.list-enter-active, .list-leave-active {
-  transition: all 1s;
+.list-enter-active,
+.list-leave-active {
+    transition: all 1s;
 }
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(30px);
+    opacity: 0;
+    transform: translateY(30px);
 }
 </style>
